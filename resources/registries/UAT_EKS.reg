@@ -1,0 +1,7 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Xoreax\IncrediBuild\Coordinator]
+"IncrediCloudWebSiteURL"="https://cloud-uat.incredibuild.com"
+"IncrediCloudBaseUrl"="https://cloudapi-uat.incredibuild.com"
+"IncrediCloudSubscriptionKey"="cf1f086f29224608a52d1a11b7dee0f2"
+"IncrediCloudCoordID"="abale"
