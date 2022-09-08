@@ -1,7 +1,7 @@
 from utils import Constants as C
 from utils import SlnHandlers as SF
 
-
+# Unifying all data needed for generating a build command
 class BuildDataCollector():    
     def __init__(self, clicmd: str | None = None):
         self.sln = ''
@@ -13,11 +13,10 @@ class BuildDataCollector():
         self.newdataArrived = False
         self.startTime = 0
         self.endTime = 0
-    
+ 
     def generateConfigByCompiler(self):
         # notice that |x64 is failing for MSBuild
         # since default Platform is chosen pre flags are added
-        # remember to change
         config = self.buildtype
         match(self.compiler):
             case 'BuildConsole':
@@ -56,10 +55,11 @@ class BuildDataCollector():
     def __str__(self):
         return self.raw_cmd 
 
-    def MethodStated(self) -> bool:
-        return self.exec_method is not None
-
     def __le__(self, cmdline: str):
+        # this is used as a special assignment operator
+        # for this specific class
+        # Not to be confused with <= 'Less Equal'
+        
         self.reset()
         self.raw_cmd = cmdline
 
@@ -79,16 +79,14 @@ class BuildDataCollector():
         return self.sln != '' and self.compiler != '' and\
              self.buildtype != '' # and len(self.flags) != 0
 
-    def isValid(self) -> bool:
-        # Assuming compilers implemented default flags
-        return self.sln != '' and self.compiler != ''\
-                    and self.buildtype != ''
-
     def __repr__(self):
         return '[sln: ' + self.sln + ' | ' + 'compiler: ' + self.compiler +\
              ' | ' + 'buildtype: ' + self.buildtype + ']'
 
     def Collect(self, event, values):
+        # if there is new data to collect
+        # check which field and assign it to correct var.
+        
         if event in [C.EX_SLN_DROP_KEY, C.EX_COMP_KEY,
                      C.EX_BUILD_TYPE_KEY, C.EX_SUBMIT_KEY]:
 
@@ -102,9 +100,7 @@ class BuildDataCollector():
 
             case C.EX_BUILD_TYPE_KEY:
                 self.buildtype = values[C.EX_BUILD_TYPE_KEY]
-            case C.EX_SUBMIT_KEY:
-                # assignFlags
-                pass
+ 
 
     def assignSln(self, values):
         self.sln = SF.SlnFinder().Get_Sln_Dict()[values[C.EX_SLN_DROP_KEY]] \
@@ -115,6 +111,7 @@ class BuildDataCollector():
 
     # end of buildcollector class
     # start of flagsdigestor class (nested)
+    
     class FlagsDigestor():
         def __init__(self,comp):
             self.comp = comp
@@ -149,6 +146,7 @@ class BuildDataCollector():
             def digest(modal,values) -> list[str]:
                 # This framework doesnt support any other way for this 
                 # to be done other than hardcoding it
+                # (no adequate binding)
                 
                 if values is None:
                     return []
