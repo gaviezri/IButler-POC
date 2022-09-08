@@ -6,8 +6,11 @@ from copy import deepcopy
 
 class ExecutedCommandsKeeper():
     class EC_InANutShell():
-        def __init__(self,bdc: BDC):
+    # this is an instance of an EXECUTED COMMAND,
+    # only whats needed, in a nut shell
         
+        def __init__(self,bdc: BDC):
+        # BDC == BuildDataCollector        
             self.raw_cmd = deepcopy(bdc.raw_cmd)
             self.startTime = bdc.startTime
             self.endTime = bdc.endTime
